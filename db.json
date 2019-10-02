@@ -1,0 +1,24 @@
+{
+  "books": [
+    {
+      "title": "json-server books",
+      "rating": "2.8",
+      "id": 1
+    },
+    {
+      "title": "the investor",
+      "rating": "4.1",
+      "id": 2
+    },
+    {
+      "title": "new book",
+      "rating": "5.0",
+      "id": 3
+    },
+    {
+      "title": "Nigeria",
+      "rating": "4.0",
+      "id": 4
+    }
+  ]
+}
