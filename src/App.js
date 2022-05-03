@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {Label, Input, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, Table, Button } from "reactstrap";
+import {
+  Label, Input, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter,
+  Table, Button, Navbar, Collapse, NavbarToggler, 
+} from "reactstrap";
 import axios from "axios"
 
 class App extends Component {
@@ -21,19 +24,19 @@ class App extends Component {
   }
   componentWillMount() {
     this._refreshBooks()
-    
+
   }
   toggleNewBookModal() {
-    this.setState ({
-      newBookModal: ! this.state.newBookModal
+    this.setState({
+      newBookModal: !this.state.newBookModal
     })
-    
+
   }
   toggleEditBookModal() {
-    this.setState ({
-      editBookModal: ! this.state.editBookModal
+    this.setState({
+      editBookModal: !this.state.editBookModal
     })
-    
+
   }
   addBook() {
     axios.post("http://localhost:3000/books", this.state.newBookData).then((response) => {
@@ -41,32 +44,34 @@ class App extends Component {
 
       books.push(response.data);
 
-      this.setState({ books, newBookModal: false, newBookData: {
-        title: "",
-        rating: ""
-  
-      },});
+      this.setState({
+        books, newBookModal: false, newBookData: {
+          title: "",
+          rating: ""
+
+        },
+      });
     });
 
   }
   updateBook() {
     let { title, rating } = this.state.editBookData;
 
-    axios.put("http://localhost:3000/books/" + this.state.editBookData.id,{
-     title, rating 
-    }).then ((response) => {
+    axios.put("http://localhost:3000/books/" + this.state.editBookData.id, {
+      title, rating
+    }).then((response) => {
       this._refreshBooks();
 
       this.setState({
-        editBookModal: false, editBookData: {id: "", title: "", ratinng: ""}
+        editBookModal: false, editBookData: { id: "", title: "", ratinng: "" }
       })
-      
+
     });
-    
+
   }
   editBook(id, title, rating) {
     this.setState({
-      editBookData: {id, title, rating}, editBookModal: ! this.state.editBookModal
+      editBookData: { id, title, rating }, editBookModal: !this.state.editBookModal
     })
 
   }
@@ -76,66 +81,71 @@ class App extends Component {
     })
   }
   _refreshBooks() {
-    axios.get('http://localhost:3000/books').then ((response) =>{
+    axios.get('http://localhost:3000/books').then((response) => {
       this.setState({
-        books: response.data  
+        books: response.data
       })
     });
   }
-  
-  
+
+
   render() {
     let books = this.state.books.map((book) => {
-      return(
+      return (
+
         <tr keys={book.id}>
-            <td>{book.id}</td>
-            <td>{book.title}</td>
-            <td>{book.rating}</td>
-            <td>
-              <Button color="success" size="sm" className="mr-2" onClick={this.editBook.bind(this, book.id, book.title, book.rating)}>Edit</Button>
-              <Button color="danger" size="sm" onClick={this.deleteBook.bind(this, book.id)}>Delete</Button>
-            </td>
-            </tr>
+          <td>{book.id}</td>
+          <td>{book.title}</td>
+          <td>{book.rating}</td>
+          <td>
+            <Button color="success" size="sm" className="mr-2" onClick={this.editBook.bind(this, book.id, book.title, book.rating)}>Edit</Button>
+            <Button color="danger" size="sm" onClick={this.deleteBook.bind(this, book.id)}>Delete</Button>
+          </td>
+        </tr>
       )
 
     });
     return (
       <div className="App container">
 
-        <h1>Books App</h1>
+<div class="jumbotron">
+	  <h1 class="display-5">Book Entry</h1>
+	  
+	</div>
 
+        
         <Button className="my-3" color="primary" onClick={this.toggleNewBookModal.bind(this)}>Add Book</Button>
 
         <Modal isOpen={this.state.newBookModal} toggle={this.toggleNewBookModal.bind(this)}>
           <ModalHeader toggle={this.toggleNewBookModal.bind(this)}>Add a new book</ModalHeader>
           <ModalBody>
 
-        <FormGroup>
-          <Label for="title">Title</Label>
-          <Input  id="title" value={this.state.newBookData.title} onChange={(e) => {
-              let { newBookData } = this.state;
+            <FormGroup>
+              <Label for="title">Title</Label>
+              <Input id="title" value={this.state.newBookData.title} onChange={(e) => {
+                let { newBookData } = this.state;
 
-              newBookData.title = e.target.value;
+                newBookData.title = e.target.value;
 
-            this.setState({ newBookData });
+                this.setState({ newBookData });
 
 
-          }}/>
-      </FormGroup>
-      <FormGroup>
-          <Label for="rating">Rating</Label>
-          <Input  id="rating" value={this.state.newBookData.rating} onChange={(e) => {
-            let { newBookData } = this.state;
+              }} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="rating">Rating</Label>
+              <Input id="rating" value={this.state.newBookData.rating} onChange={(e) => {
+                let { newBookData } = this.state;
 
-            newBookData.rating = e.target.value;
+                newBookData.rating = e.target.value;
 
-          this.setState({ newBookData });
+                this.setState({ newBookData });
 
-            
-          }}/>
-      </FormGroup>
-      
-    </ModalBody>
+
+              }} />
+            </FormGroup>
+
+          </ModalBody>
 
           <ModalFooter>
             <Button color="primary" onClick={this.addBook.bind(this)}>Add Book</Button>{' '}
@@ -148,40 +158,40 @@ class App extends Component {
           <ModalHeader toggle={this.toggleEditBookModal.bind(this)}>Add a new book</ModalHeader>
           <ModalBody>
 
-        <FormGroup>
-          <Label for="title">Title</Label>
-          <Input  id="title" value={this.state.editBookData.title} onChange={(e) => {
-              let { editBookData } = this.state;
+            <FormGroup>
+              <Label for="title">Title</Label>
+              <Input id="title" value={this.state.editBookData.title} onChange={(e) => {
+                let { editBookData } = this.state;
 
-              editBookData.title = e.target.value;
+                editBookData.title = e.target.value;
 
-            this.setState({ editBookData });
+                this.setState({ editBookData });
 
 
-          }}/>
-      </FormGroup>
-      <FormGroup>
-          <Label for="rating">Rating</Label>
-          <Input  id="rating" value={this.state.editBookData.rating} onChange={(e) => {
-            let { editBookData } = this.state;
+              }} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="rating">Rating</Label>
+              <Input id="rating" value={this.state.editBookData.rating} onChange={(e) => {
+                let { editBookData } = this.state;
 
-            editBookData.rating = e.target.value;
+                editBookData.rating = e.target.value;
 
-          this.setState({ editBookData });
+                this.setState({ editBookData });
 
-            
-          }}/>
-      </FormGroup>
-      
-    </ModalBody>
+
+              }} />
+            </FormGroup>
+
+          </ModalBody>
 
           <ModalFooter>
             <Button color="primary" onClick={this.updateBook.bind(this)}> Update Book</Button>{' '}
             <Button color="secondary" onClick={this.toggleEditBookModal.bind(this)}>Cancel</Button>
           </ModalFooter>
         </Modal>
-        
-        <Table>
+
+        <Table className="table">
           <thead>
             <tr>
               <th>#</th>
@@ -194,8 +204,8 @@ class App extends Component {
           <tbody>
             {books}
           </tbody>
-            
-            
+
+
         </Table>
 
       </div>

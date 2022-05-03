@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "title": "json-server books",
+      "title": "json-server",
       "rating": "2.8",
       "id": 1
     },
@@ -16,9 +16,14 @@
       "id": 3
     },
     {
-      "title": "Nigeria",
-      "rating": "4.0",
+      "title": "Business",
+      "rating": "9.7",
       "id": 4
+    },
+    {
+      "title": "housing",
+      "rating": "7.6",
+      "id": 5
     }
   ]
 }

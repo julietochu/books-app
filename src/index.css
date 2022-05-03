@@ -1,0 +1,16 @@
+body{
+    background-color: black;
+}
+.table {
+    color: white;
+}
+h2{
+    color: "red";
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.jumbotron {
+    background-image: url("images/library.png");
+    background-size: cover;
+  }
