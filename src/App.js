@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Label, Input, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter,
-  Table, Button, Navbar, Collapse, NavbarToggler, 
+  Table, Button
 } from "reactstrap";
 import axios from "axios"
 
